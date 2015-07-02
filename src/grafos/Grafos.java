@@ -1,12 +1,15 @@
 package grafos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Grafos {
     
     ArrayList<Vertice> vertice;
     ArrayList<Aresta> aresta;
-
+    int[][] matrizAdjacencia;
+    
+    
     public Grafos() {
         this.aresta = new ArrayList<>();
         this.vertice = new ArrayList<>();
@@ -37,5 +40,22 @@ public class Grafos {
         }
     }
     
+    public int[][] criaMatrizAdjacencia(){
+        int[][] matriz = new int[this.vertice.size()][this.vertice.size()];
+        for(Aresta aresta : this.aresta){
+            int linha = Integer.parseInt(aresta.origem.nome);
+            int coluna = Integer.parseInt(aresta.destino.nome);
+
+            matriz[linha - 1][coluna - 1] = 1;
+        }
+        return matriz;
+    }
     
+    public void mostraMatriz(){
+        int i;
+        System.out.println("\nMatriz de Adjacencia");
+        for(i = 0; i < this.vertice.size(); i++){
+            System.out.println(Arrays.toString(this.matrizAdjacencia[i]));
+        }
+    }
 }

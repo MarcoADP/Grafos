@@ -33,6 +33,7 @@ public class Leitura {
            String nome = linha.substring(0, linha.indexOf(' '));
            String rotulo = linha.substring(linha.lastIndexOf(' ') + 1, linha.length());
            //System.out.println(nome + " " + rotulo);
+           
            Vertice vert = new Vertice(nome, rotulo);           
            grafo.vertice.add(vert);
            linha = br.readLine();

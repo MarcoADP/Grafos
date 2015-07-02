@@ -9,5 +9,7 @@ public class Execucao {
         grafo = Leitura.leitura();
         grafo.mostraVertice();
         grafo.mostraAresta();
+        grafo.matrizAdjacencia = grafo.criaMatrizAdjacencia();
+        grafo.mostraMatriz();
     }
 }
