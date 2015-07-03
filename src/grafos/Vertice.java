@@ -6,6 +6,8 @@ public class Vertice {
     String rotulo;
     int estado;
     int distancia;
+    int tempoDescoberto;
+    int tempoTermino;
     Vertice pred;
     
     public Vertice(String nome, String rotulo) {

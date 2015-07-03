@@ -1,6 +1,19 @@
 package grafos;
 
 public class Algoritmos {
+    
+    static int tempo;
+    
+    public static void resetaVertices(Grafos grafo){
+        for(Vertice vert : grafo.vertice){
+            vert.tempoDescoberto = 0;
+            vert.tempoTermino = 0;
+            vert.distancia = 0;
+            vert.pred = null;
+            vert.estado = 0;
+        }
+    }
+    
     public static void busca_largura(Grafos grafo, Vertice vert){
         //0 Não descoberto (Branco)
         //1 Descoberto e na fila (Cinza)
@@ -35,6 +48,58 @@ public class Algoritmos {
                 System.out.println("Predecessor: NULL");
             }
             System.out.println("Distancia: " + vertice.distancia);
+        }
+    }
+
+    public static void menorCaminho(Grafos grafo, Vertice origem, Vertice destino){
+        if (origem.nome.equals(destino.nome)){
+            System.out.println("\n" + destino.nome);
+        } else {
+            if(destino.pred == null){
+                System.out.println("\nNão existe caminho");
+            } else {
+                menorCaminho(grafo, origem, destino.pred);
+                System.out.println(destino.nome);
+            }
+        }
+    }
+
+    public static void inicializa_busca_profundidade(Grafos grafo){
+        tempo = 0;
+        for(Vertice vertice : grafo.vertice){
+            if(vertice.estado == 0){
+                 busca_profundidade(grafo, vertice);
+            }
+        }
+    }
+    
+    public static void busca_profundidade(Grafos grafo, Vertice vertice){
+        tempo++;
+        vertice.estado = 1;
+        vertice.tempoDescoberto = tempo;
+        for(Aresta aresta : grafo.aresta){
+            if(aresta.origem.nome.equals(vertice.nome)){
+                if(aresta.destino.estado == 0){
+                    aresta.destino.pred = vertice;
+                    busca_profundidade(grafo, aresta.destino);
+                }
+            }
+        }
+        vertice.estado = -1;
+        tempo++;
+        vertice.tempoTermino = tempo;
+    } 
+    
+    public static void mostraVertProfundidade(Grafos grafo){
+        for(Vertice vertice : grafo.vertice){
+            System.out.println("\n\nVertice: " + vertice.nome);
+            System.out.println("Tempo de descoberta: " + vertice.tempoDescoberto);
+            System.out.println("Tempo de término: " + vertice.tempoTermino);
+            try{
+                System.out.println("Predecessor: " + vertice.pred.nome);
+            } catch(Exception e){
+                System.out.println("Predecessor: NULL");
+            }
         }
     }
 }
