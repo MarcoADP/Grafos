@@ -10,6 +10,8 @@ public class Execucao {
         //grafo.mostraAresta();
         //grafo.matrizAdjacencia = grafo.criaMatrizAdjacencia();
         //grafo.mostraMatriz();
+        //grafo.criaListaAdjacencia();
+        //grafo.mostraListaCompleta();
         int indice = grafo.posicaoVertice("5"); //função para retornar a posicao do vertice 
         //Algoritmos.busca_largura(grafo, grafo.vertice.get(0));
         //Algoritmos.mostraVertLargura(grafo);
@@ -17,5 +19,6 @@ public class Execucao {
         //Algoritmos.resetaVertices(grafo);
         Algoritmos.inicializa_busca_profundidade(grafo);
         Algoritmos.mostraVertProfundidade(grafo);
+        
     }
 }

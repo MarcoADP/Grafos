@@ -22,20 +22,31 @@ public class Algoritmos {
         fila.insere(vert);
         while(!fila.vazia()){
             Vertice u = fila.remove();
-            for(Aresta aresta : grafo.aresta){
-                //System.out.println(aresta.origem.nome + " " + aresta.destino.nome);
-                if(aresta.origem.nome.equals(u.nome)){
-                    //System.out.println("\nAlvo: " + u.nome);
-                    //System.out.println(aresta.origem.nome + " " + aresta.destino.nome);
-                    if(aresta.destino.estado == 0){
-                        aresta.destino.estado = 1;
-                        aresta.destino.distancia = u.distancia + 1;
-                        aresta.destino.pred = u;
-                        fila.insere(aresta.destino);
-                    }
+            int i;
+            for(i = 0; i < u.listaAdjacencia.size(); i++){
+                Vertice vertAuxiliar = u.listaAdjacencia.get(i);
+                if(vertAuxiliar.estado == 0){
+                    vertAuxiliar.estado = 1;
+                    vertAuxiliar.distancia = u.distancia + 1;
+                    vertAuxiliar.pred = u;
+                    fila.insere(vertAuxiliar);
                 }
             }
             u.estado = -1;
+            //for(Aresta aresta : grafo.aresta){
+                //System.out.println(aresta.origem.nome + " " + aresta.destino.nome);
+                //if(aresta.origem.nome.equals(u.nome)){
+                    //System.out.println("\nAlvo: " + u.nome);
+                    //System.out.println(aresta.origem.nome + " " + aresta.destino.nome);
+                    //if(aresta.destino.estado == 0){
+                        //aresta.destino.estado = 1;
+                        //aresta.destino.distancia = u.distancia + 1;
+                        //aresta.destino.pred = u;
+                        //fila.insere(aresta.destino);
+                    //}
+                //}
+            //}
+            //u.estado = -1;
         }
     }
     
@@ -68,23 +79,31 @@ public class Algoritmos {
         tempo = 0;
         for(Vertice vertice : grafo.vertice){
             if(vertice.estado == 0){
-                 busca_profundidade(grafo, vertice);
+                 busca_profundidade(vertice);
             }
         }
     }
     
-    public static void busca_profundidade(Grafos grafo, Vertice vertice){
+    public static void busca_profundidade(Vertice vertice){
         tempo++;
         vertice.estado = 1;
         vertice.tempoDescoberto = tempo;
-        for(Aresta aresta : grafo.aresta){
+        int i;
+        for(i = 0; i < vertice.listaAdjacencia.size(); i++){
+            Vertice vertAuxiliar = vertice.listaAdjacencia.get(i);
+            if(vertAuxiliar.estado == 0){
+                vertAuxiliar.pred = vertice;
+                busca_profundidade(vertAuxiliar);
+            }
+        }
+        /*for(Aresta aresta : grafo.aresta){
             if(aresta.origem.nome.equals(vertice.nome)){
                 if(aresta.destino.estado == 0){
                     aresta.destino.pred = vertice;
                     busca_profundidade(grafo, aresta.destino);
                 }
             }
-        }
+        }*/
         vertice.estado = -1;
         tempo++;
         vertice.tempoTermino = tempo;

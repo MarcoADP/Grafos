@@ -68,4 +68,16 @@ public class Grafos {
             System.out.println(Arrays.toString(this.matrizAdjacencia[i]));
         }
     }
+
+    public void criaListaAdjacencia(){
+        for(Aresta aresta : this.aresta){
+            aresta.origem.listaAdjacencia.add(aresta.destino);
+        }
+    }
+    
+    public void mostraListaCompleta(){
+        for(Vertice vertice : this.vertice){
+            vertice.mostraListaAdjacencia();
+        }
+    }
 }
