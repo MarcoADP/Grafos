@@ -25,6 +25,16 @@ public class Grafos {
         return null;
     }
     
+    public int posicaoVertice(String nome){
+        int i;
+        for(i = 0; i < this.vertice.size(); i++){
+           if(this.vertice.get(i).nome.equals(nome)){
+               return i;
+           }
+        }
+        return -1;
+    }
+    
     public void mostraVertice(){
         System.out.println("\nVertices:");
         for(Vertice vert : this.vertice){
