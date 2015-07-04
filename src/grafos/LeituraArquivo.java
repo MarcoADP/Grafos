@@ -13,10 +13,10 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 
-public class Leitura {
+public class LeituraArquivo {
     
-    public static Grafos leitura() throws FileNotFoundException, IOException{
-        Grafos grafo = new Grafos();
+    public static Grafo lerArquivo(String nomeArquivo) throws FileNotFoundException, IOException{
+        Grafo grafo = new Grafo();
         
         //System.out.println("Digite o nome do arquivo: ");
         //Scanner entrada = new Scanner(System.in);
@@ -24,7 +24,7 @@ public class Leitura {
         //String arquivo;
         //arquivo = entrada.nextLine();
         
-        FileInputStream stream = new FileInputStream("exemplo1.tgf");
+        FileInputStream stream = new FileInputStream(nomeArquivo);
         InputStreamReader reader = new InputStreamReader(stream);
         BufferedReader br = new BufferedReader(reader);
         String linha = br.readLine();
@@ -35,7 +35,7 @@ public class Leitura {
            //System.out.println(nome + " " + rotulo);
            
            Vertice vert = new Vertice(nome, rotulo);           
-           grafo.vertice.add(vert);
+           grafo.listaVertice.add(vert);
            linha = br.readLine();
            if(linha.equals("#")){
                break;
@@ -60,10 +60,12 @@ public class Leitura {
             Vertice vertDestino = grafo.temVertice(destino);
             if(vertOrigem != null && vertDestino != null){
                 Aresta aresta = new Aresta(vertOrigem, vertDestino, peso);
-                grafo.aresta.add(aresta);
+                grafo.listaAresta.add(aresta);
             }
             linha = br.readLine();
         }
+        grafo.criaListaAdjacencia();
+        grafo.criaMatrizAdjacencia();
         return grafo;
     }
 }
