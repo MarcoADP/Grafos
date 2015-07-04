@@ -1,71 +1,57 @@
 package grafos;
 
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-
 public class Algoritmos {
     
-    public static final int BRANCO = 0;
-    public static final int CINZA = 1;
-    public static final int PRETO = -1;
-    public static final int INFINITO = Integer.MAX_VALUE;
+    static int tempo;
     
-    public static int tempo;
-    
-    public static ArrayList<Vertice> ordemTopologica;
-    
-    public static void resetaVertices(Grafo grafo){
-        for(Vertice vert : grafo.listaVertice){
+    public static void resetaVertices(Grafos grafo){
+        for(Vertice vert : grafo.vertice){
             vert.tempoDescoberto = 0;
             vert.tempoTermino = 0;
             vert.distancia = 0;
             vert.pred = null;
-            vert.estado = BRANCO;
+            vert.estado = 0;
         }
     }
     
-    public static void busca_largura(Grafo grafo, Vertice vert){
+    public static void busca_largura(Grafos grafo, Vertice vert){
         //0 Não descoberto (Branco)
         //1 Descoberto e na fila (Cinza)
         //-1 Todos vizinhos descobertos (Preto)
         FilaVert fila = new FilaVert();
-        vert.estado = CINZA;
         fila.insere(vert);
-
         while(!fila.vazia()){
             Vertice u = fila.remove();
-            for (Aresta a : u.listaAdjacencia) {
-                Vertice v = a.destino;
-                if(v.estado == BRANCO){
-                    v.estado = CINZA;
-                    v.distancia = u.distancia + 1;
-                    v.pred = u;
-                    fila.insere(v);
+            int i;
+            for(i = 0; i < u.listaAdjacencia.size(); i++){
+                Vertice vertAuxiliar = u.listaAdjacencia.get(i);
+                if(vertAuxiliar.estado == 0){
+                    vertAuxiliar.estado = 1;
+                    vertAuxiliar.distancia = u.distancia + 1;
+                    vertAuxiliar.pred = u;
+                    fila.insere(vertAuxiliar);
                 }
             }
-            u.estado = PRETO;
+            u.estado = -1;
+            //for(Aresta aresta : grafo.aresta){
+                //System.out.println(aresta.origem.nome + " " + aresta.destino.nome);
+                //if(aresta.origem.nome.equals(u.nome)){
+                    //System.out.println("\nAlvo: " + u.nome);
+                    //System.out.println(aresta.origem.nome + " " + aresta.destino.nome);
+                    //if(aresta.destino.estado == 0){
+                        //aresta.destino.estado = 1;
+                        //aresta.destino.distancia = u.distancia + 1;
+                        //aresta.destino.pred = u;
+                        //fila.insere(aresta.destino);
+                    //}
+                //}
+            //}
+            //u.estado = -1;
         }
-        /*
-        Queue<Vertice> fila = new LinkedList<Vertice>();
-        fila.add(vert);
-        Vertice u;
-        while(!fila.isEmpty()){
-            u = fila.remove();
-            for (Vertice v : u.listaAdjacencia) {
-                if(v.estado == BRANCO){
-                    v.setEstado(CINZA);
-                    v.setDistancia(u.distancia + 1);
-                    v.setPred(u);
-                    fila.add(v);
-                }
-            }
-            u.setEstado(PRETO);
-        }
-        */
     }
     
-    public static void mostraVertLargura(Grafo grafo){
-        for(Vertice vertice : grafo.listaVertice){
+    public static void mostraVertLargura(Grafos grafo){
+        for(Vertice vertice : grafo.vertice){
             System.out.println("\n\nVertice: " + vertice.nome);
             if(vertice.pred != null){
                 System.out.println("Predecessor: " + vertice.pred.nome);
@@ -76,7 +62,7 @@ public class Algoritmos {
         }
     }
 
-    public static void menorCaminho(Grafo grafo, Vertice origem, Vertice destino){
+    public static void menorCaminho(Grafos grafo, Vertice origem, Vertice destino){
         if (origem.nome.equals(destino.nome)){
             System.out.println("\n" + destino.nome);
         } else {
@@ -88,14 +74,11 @@ public class Algoritmos {
             }
         }
     }
-    
-    /* Algoritmo de busca em profundidade e algoritmo ordenação Topológica */
 
-    public static void inicializa_busca_profundidade(Grafo grafo){
-        ordemTopologica = new ArrayList<>();
+    public static void inicializa_busca_profundidade(Grafos grafo){
         tempo = 0;
-        for(Vertice vertice : grafo.listaVertice){
-            if(vertice.estado == BRANCO){
+        for(Vertice vertice : grafo.vertice){
+            if(vertice.estado == 0){
                  busca_profundidade(vertice);
             }
         }
@@ -103,24 +86,31 @@ public class Algoritmos {
     
     public static void busca_profundidade(Vertice vertice){
         tempo++;
-        vertice.estado = CINZA;
+        vertice.estado = 1;
         vertice.tempoDescoberto = tempo;
         int i;
         for(i = 0; i < vertice.listaAdjacencia.size(); i++){
-            Vertice vertAuxiliar = vertice.listaAdjacencia.get(i).destino;
-            if(vertAuxiliar.estado == BRANCO){
+            Vertice vertAuxiliar = vertice.listaAdjacencia.get(i);
+            if(vertAuxiliar.estado == 0){
                 vertAuxiliar.pred = vertice;
                 busca_profundidade(vertAuxiliar);
             }
         }
-        vertice.estado = PRETO;
+        /*for(Aresta aresta : grafo.aresta){
+            if(aresta.origem.nome.equals(vertice.nome)){
+                if(aresta.destino.estado == 0){
+                    aresta.destino.pred = vertice;
+                    busca_profundidade(grafo, aresta.destino);
+                }
+            }
+        }*/
+        vertice.estado = -1;
         tempo++;
         vertice.tempoTermino = tempo;
-        ordemTopologica.add(0, vertice);
     } 
     
-    public static void mostraVertProfundidade(Grafo grafo){
-        for(Vertice vertice : grafo.listaVertice){
+    public static void mostraVertProfundidade(Grafos grafo){
+        for(Vertice vertice : grafo.vertice){
             System.out.println("\n\nVertice: " + vertice.nome);
             System.out.println("Tempo de descoberta: " + vertice.tempoDescoberto);
             System.out.println("Tempo de término: " + vertice.tempoTermino);
@@ -129,65 +119,6 @@ public class Algoritmos {
             } catch(Exception e){
                 System.out.println("Predecessor: NULL");
             }
-        }
-    }
-    
-    public static void mostraOrdemTopologica(){
-        System.out.print("\nOrdem Topológica: ");
-        for (Vertice v : ordemTopologica) 
-            System.out.print(v.nome + " ");
-    }
-    
-    /* Algoritmo de Dijkstra */
-    private static void inicializaVertices(Grafo grafo, Vertice s){
-        for (Vertice v : grafo.listaVertice) {
-            v.distancia = INFINITO;
-            v.pred = null;
-        }
-        s.distancia = 0;
-    }
-    
-    private static void relaxa(Vertice u, Vertice v, int peso){
-        if (v.distancia > u.distancia + peso){
-            v.distancia = u.distancia + peso;
-            v.pred = u;
-        }
-    }
-    
-    public static void dijkstra(Grafo grafo, Vertice s){
-        inicializaVertices(grafo, s);
-        PriorityQueue<Vertice> filaP = new PriorityQueue<>();
-        filaP.add(s);
-       
-        //for (Vertice v : grafo.listaVertice)
-        //    filaP.add(v);
-
-        while (!filaP.isEmpty()){
-            Vertice u = filaP.poll();
-            for (Aresta a : u.listaAdjacencia) {
-                Vertice v = a.destino;
-                if (v.distancia > u.distancia + a.peso){
-                    filaP.remove(v);
-                    v.distancia = u.distancia + a.peso;
-                    v.pred = u;
-                    filaP.add(v);
-                }
-            }
-        }
-    }
-    
-    public static void mostraDijkstra(Grafo grafo){
-        for(Vertice vertice : grafo.listaVertice){
-            System.out.println("\n\nVertice: " + vertice.nome);
-            if(vertice.pred != null)
-                System.out.println("Predecessor: " + vertice.pred.nome);
-            else
-                System.out.println("Predecessor: NULL");
-            
-            if (vertice.distancia == INFINITO)
-                System.out.println("Distancia: INFINITO");
-            else
-                System.out.println("Distancia: " + vertice.distancia);
         }
     }
 }
