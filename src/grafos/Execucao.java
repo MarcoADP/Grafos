@@ -18,11 +18,17 @@ public class Execucao {
         //Algoritmos.menorCaminho(grafo, grafo.listaVertice.get(0), grafo.listaVertice.get(5));
         
         Algoritmos.resetaVertices(grafo);
-        Algoritmos.inicializa_busca_profundidade(grafo);
-        Algoritmos.mostraVertProfundidade(grafo);
-        Algoritmos.mostraOrdemTopologica();
+        //Algoritmos.inicializa_busca_profundidade(grafo);
+        //Algoritmos.mostraVertProfundidade(grafo);
+        //Algoritmos.mostraOrdemTopologica();
         
         //Algoritmos.dijkstra(grafo, grafo.listaVertice.get(0));
-        //Algoritmos.mostraDijkstra(grafo);
+        //Algoritmos.mostraGrafo(grafo);
+        
+        Algoritmos.bellmanFord(grafo, grafo.listaVertice.get(0));
+        System.out.println("-------------------------------------------------");
+        Algoritmos.mostraGrafo(grafo);
+        
+        
     }
 }
