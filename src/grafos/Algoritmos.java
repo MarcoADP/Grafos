@@ -194,16 +194,15 @@ public class Algoritmos {
 
     public static boolean bellmanFord(Grafo grafo, Vertice s) {
         inicializaVertices(grafo, s);
-        int k;
-        for (k = 0; k < grafo.listaVertice.size() - 1; k++) {
-            for (Aresta a : grafo.listaAresta) {
-                //a.origem é o vertice u
-                //a.destino éo vertice v
-                //a.peso é o peso
+        int i;
+        for (i = 0; i < grafo.listaVertice.size() - 1; i++) {
+            for (Aresta a : grafo.listaAresta) {                
                 Vertice u = a.origem;
                 Vertice v = a.destino;
                 int peso = a.peso;
-                System.out.println(a.destino.rotulo + " " + a.origem.rotulo + " " + a.peso);
+                
+                System.out.println("U Dist: " + u.distancia + " V dist: " + v.distancia + " W: " + peso);
+                
                 relaxa(u, v, peso);
             }
         }

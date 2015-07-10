@@ -32,7 +32,7 @@ public class LeituraArquivo {
            grafo.listaVertice.add(vert);
            linha = br.readLine();
            if(linha.equals("#")){
-               break;
+               break; //Sai do while
            }
         }
         //System.out.println("\nArestas:");

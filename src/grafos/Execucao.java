@@ -25,8 +25,9 @@ public class Execucao {
         //Algoritmos.dijkstra(grafo, grafo.listaVertice.get(0));
         //Algoritmos.mostraGrafo(grafo);
         
+       
+        
         Algoritmos.bellmanFord(grafo, grafo.listaVertice.get(0));
-        System.out.println("-------------------------------------------------");
         Algoritmos.mostraGrafo(grafo);
         
         
