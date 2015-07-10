@@ -196,14 +196,15 @@ public class Algoritmos {
         inicializaVertices(grafo, s);
         int i;
         for (i = 0; i < grafo.listaVertice.size() - 1; i++) {
-            for (Aresta a : grafo.listaAresta) {                
+            for (Aresta a : grafo.listaAresta) {
                 Vertice u = a.origem;
                 Vertice v = a.destino;
                 int peso = a.peso;
-                
-                System.out.println("U Dist: " + u.distancia + " V dist: " + v.distancia + " W: " + peso);
-                
-                relaxa(u, v, peso);
+
+                if (v.distancia > (double) u.distancia + peso) {
+                    v.distancia = u.distancia + peso;
+                    v.pred = u;
+                }
             }
         }
         for (Aresta a : grafo.listaAresta) {
