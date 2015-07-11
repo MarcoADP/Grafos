@@ -14,21 +14,21 @@ public class Execucao {
         int indice = grafo.posicaoVertice("5"); //função para retornar a posicao do vertice 
         
         //Algoritmos.busca_largura(grafo, grafo.listaVertice.get(0));
-        //Algoritmos.mostraVertLargura(grafo);
+        //grafo.mostraVertLargura();
         //Algoritmos.menorCaminho(grafo, grafo.listaVertice.get(0), grafo.listaVertice.get(5));
         
-        Algoritmos.resetaVertices(grafo);
+        //Algoritmos.resetaVertices(grafo);
         //Algoritmos.inicializa_busca_profundidade(grafo);
-        //Algoritmos.mostraVertProfundidade(grafo);
+        //grafo.mostraVertProfundidade();
         //Algoritmos.mostraOrdemTopologica();
         
         //Algoritmos.dijkstra(grafo, grafo.listaVertice.get(0));
         //Algoritmos.mostraGrafo(grafo);
-        
+                
        
         
         Algoritmos.bellmanFord(grafo, grafo.listaVertice.get(0));
-        Algoritmos.mostraGrafo(grafo);
+        grafo.mostraGrafo();
         
         
     }

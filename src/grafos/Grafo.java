@@ -1,5 +1,6 @@
 package grafos;
 
+import static grafos.Algoritmos.INFINITO;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -76,6 +77,48 @@ public class Grafo {
         for(Vertice vertice : this.listaVertice){
             vertice.mostraAdjacentes();
             System.out.println();
+        }
+    }
+    
+    public void mostraGrafo() {
+        for (Vertice vertice : this.listaVertice) {
+            System.out.println("\n\nVertice: " + vertice.nome);
+            if (vertice.pred != null) {
+                System.out.println("Predecessor: " + vertice.pred.nome);
+            } else {
+                System.out.println("Predecessor: NULL");
+            }
+
+            if (vertice.distancia == INFINITO) {
+                System.out.println("Distancia: INFINITO");
+            } else {
+                System.out.println("Distancia: " + vertice.distancia);
+            }
+        }
+    }
+    
+    public void mostraVertLargura() {
+        for (Vertice vertice : this.listaVertice) {
+            System.out.println("\n\nVertice: " + vertice.nome);
+            if (vertice.pred != null) {
+                System.out.println("Predecessor: " + vertice.pred.nome);
+            } else {
+                System.out.println("Predecessor: NULL");
+            }
+            System.out.println("Distancia: " + vertice.distancia);
+        }
+    }
+    
+    public void mostraVertProfundidade() {
+        for (Vertice vertice : this.listaVertice) {
+            System.out.println("\n\nVertice: " + vertice.nome);
+            System.out.println("Tempo de descoberta: " + vertice.tempoDescoberto);
+            System.out.println("Tempo de término: " + vertice.tempoTermino);
+            try {
+                System.out.println("Predecessor: " + vertice.pred.nome);
+            } catch (Exception e) {
+                System.out.println("Predecessor: NULL");
+            }
         }
     }
 }

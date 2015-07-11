@@ -64,18 +64,6 @@ public class Algoritmos {
          */
     }
 
-    public static void mostraVertLargura(Grafo grafo) {
-        for (Vertice vertice : grafo.listaVertice) {
-            System.out.println("\n\nVertice: " + vertice.nome);
-            if (vertice.pred != null) {
-                System.out.println("Predecessor: " + vertice.pred.nome);
-            } else {
-                System.out.println("Predecessor: NULL");
-            }
-            System.out.println("Distancia: " + vertice.distancia);
-        }
-    }
-
     public static void menorCaminho(Grafo grafo, Vertice origem, Vertice destino) {
         if (origem.nome.equals(destino.nome)) {
             System.out.println("\n" + destino.nome);
@@ -116,19 +104,6 @@ public class Algoritmos {
         tempo++;
         vertice.tempoTermino = tempo;
         ordemTopologica.add(0, vertice);
-    }
-
-    public static void mostraVertProfundidade(Grafo grafo) {
-        for (Vertice vertice : grafo.listaVertice) {
-            System.out.println("\n\nVertice: " + vertice.nome);
-            System.out.println("Tempo de descoberta: " + vertice.tempoDescoberto);
-            System.out.println("Tempo de término: " + vertice.tempoTermino);
-            try {
-                System.out.println("Predecessor: " + vertice.pred.nome);
-            } catch (Exception e) {
-                System.out.println("Predecessor: NULL");
-            }
-        }
     }
 
     public static void mostraOrdemTopologica() {
@@ -175,22 +150,7 @@ public class Algoritmos {
         }
     }
 
-    public static void mostraGrafo(Grafo grafo) {
-        for (Vertice vertice : grafo.listaVertice) {
-            System.out.println("\n\nVertice: " + vertice.nome);
-            if (vertice.pred != null) {
-                System.out.println("Predecessor: " + vertice.pred.nome);
-            } else {
-                System.out.println("Predecessor: NULL");
-            }
 
-            if (vertice.distancia == INFINITO) {
-                System.out.println("Distancia: INFINITO");
-            } else {
-                System.out.println("Distancia: " + vertice.distancia);
-            }
-        }
-    }
 
     public static boolean bellmanFord(Grafo grafo, Vertice s) {
         inicializaVertices(grafo, s);
@@ -201,6 +161,7 @@ public class Algoritmos {
                 Vertice v = a.destino;
                 int peso = a.peso;
 
+                //relaxa(u, v, peso);
                 if (v.distancia > (double) u.distancia + peso) {
                     v.distancia = u.distancia + peso;
                     v.pred = u;
@@ -214,4 +175,5 @@ public class Algoritmos {
         }
         return true;
     }
+    
 }
