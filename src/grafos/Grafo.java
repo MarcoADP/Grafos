@@ -15,13 +15,13 @@ public class Grafo {
         this.listaVertice = new ArrayList<>();
     }
     
-    public Vertice temVertice(String nome){
-        for(Vertice vert : this.listaVertice){
-            if(vert.nome.equals(nome)){
-                return vert;
-            }
-        }
-        return null;
+    public Vertice getVertice(int numero){
+        return this.listaVertice.get(numero - 1);
+    }
+    
+    public void addAresta(Aresta a){
+        this.listaAresta.add(a);
+        this.getVertice(a.origem.numero).listaAdjacencia.add(a);
     }
     
     public int posicaoVertice(String nome){
@@ -37,7 +37,7 @@ public class Grafo {
     public void mostraVertice(){
         System.out.println("\nVertices:");
         for(Vertice vert : this.listaVertice){
-           System.out.println(vert.nome + " " + vert.rotulo);
+           System.out.println(vert.numero + " " + vert.nome);
         }
     }
 
@@ -51,8 +51,8 @@ public class Grafo {
     public void criaMatrizAdjacencia(){
         this.matrizAdjacencia = new int[this.listaVertice.size()][this.listaVertice.size()];
         for(Aresta aresta : this.listaAresta){
-            int linha = Integer.parseInt(aresta.origem.nome);
-            int coluna = Integer.parseInt(aresta.destino.nome);
+            int linha = aresta.origem.numero;
+            int coluna = aresta.destino.numero;
 
             this.matrizAdjacencia[linha - 1][coluna - 1] = aresta.peso;
         }
@@ -80,9 +80,23 @@ public class Grafo {
         }
     }
     
+    public Grafo transposto(){        
+        Grafo transposto = new Grafo();
+        for (Vertice v : this.listaVertice)
+            transposto.listaVertice.add(new Vertice(v.numero, v.nome));
+        for (Aresta a : this.listaAresta){
+            Vertice origem = transposto.getVertice(a.destino.numero);
+            Vertice destino = transposto.getVertice(a.origem.numero); 
+            transposto.addAresta(new Aresta(origem, destino, a.peso));
+        }
+        
+        transposto.criaMatrizAdjacencia();
+        return transposto;  
+    }
+    
     public void mostraGrafo() {
         for (Vertice vertice : this.listaVertice) {
-            System.out.println("\n\nVertice: " + vertice.nome);
+            System.out.println("\nVertice: " + vertice.nome);
             if (vertice.pred != null) {
                 System.out.println("Predecessor: " + vertice.pred.nome);
             } else {

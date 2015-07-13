@@ -5,31 +5,35 @@ import java.io.IOException;
 
 public class Execucao {
     public static void main(String[] args) throws IOException {
-        Grafo grafo = LeituraArquivo.lerArquivo("exemplo1.tgf");
+        Grafo grafo = LeituraArquivo.lerArquivo("exemplo1.tgf"); //exemplo do slide 15 do PDF 2_aula3.pdf
+        //Grafo grafo = LeituraArquivo.lerArquivo("exemplo2.tgf");
+        //Grafo grafo = LeituraArquivo.lerArquivo("exemplo3.tgf"); //exemplo do slide 28 do PDF 4_aula5.pdf
+        //Grafo grafo = LeituraArquivo.lerArquivo("exemplo4.tgf");
+        
         grafo.mostraListaAdjacencia();
         grafo.mostraMatrizAdjacencia();
-        //grafo.mostraVertice();
-        //grafo.mostraAresta();
         
         int indice = grafo.posicaoVertice("5"); //função para retornar a posicao do vertice 
         
-        //Algoritmos.busca_largura(grafo, grafo.listaVertice.get(0));
+        //Algoritmos.buscaEmLargura(grafo, grafo.listaVertice.get(0));
         //grafo.mostraVertLargura();
         //Algoritmos.menorCaminho(grafo, grafo.listaVertice.get(0), grafo.listaVertice.get(5));
         
         //Algoritmos.resetaVertices(grafo);
-        //Algoritmos.inicializa_busca_profundidade(grafo);
+        //Algoritmos.buscaEmProfundidade(grafo);
         //grafo.mostraVertProfundidade();
         //Algoritmos.mostraOrdemTopologica();
         
-        //Algoritmos.dijkstra(grafo, grafo.listaVertice.get(0));
-        //Algoritmos.mostraGrafo(grafo);
-                
-       
+        /*Algoritmos.dijkstra(grafo, grafo.listaVertice.get(0));
+        grafo.mostraGrafo();
+        System.out.println("\n\n\n");
         
         Algoritmos.bellmanFord(grafo, grafo.listaVertice.get(0));
-        grafo.mostraGrafo();
+        grafo.mostraGrafo();*/
         
+        Algoritmos.componentesConexos(grafo);
+        Algoritmos.componenteFortementeConexo(grafo);
+        Algoritmos.mostraSCC();
         
     }
 }
