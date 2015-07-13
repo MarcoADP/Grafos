@@ -20,48 +20,28 @@ public class Algoritmos {
             vert.tempoTermino = 0;
             vert.distancia = 0;
             vert.pred = null;
-            vert.estado = BRANCO;
+            vert.cor = BRANCO;
         }
     }
 
-    public static void busca_largura(Grafo grafo, Vertice vert) {
-        //0 Não descoberto (Branco)
-        //1 Descoberto e na fila (Cinza)
-        //-1 Todos vizinhos descobertos (Preto)
+    public static void buscaEmLargura(Grafo grafo, Vertice vert) {
         FilaVert fila = new FilaVert();
-        vert.estado = CINZA;
+        vert.cor = CINZA;
         fila.insere(vert);
 
         while (!fila.vazia()) {
             Vertice u = fila.remove();
             for (Aresta a : u.listaAdjacencia) {
                 Vertice v = a.destino;
-                if (v.estado == BRANCO) {
-                    v.estado = CINZA;
+                if (v.cor == BRANCO) {
+                    v.cor = CINZA;
                     v.distancia = u.distancia + 1;
                     v.pred = u;
                     fila.insere(v);
                 }
             }
-            u.estado = PRETO;
+            u.cor = PRETO;
         }
-        /*
-         Queue<Vertice> fila = new LinkedList<Vertice>();
-         fila.add(vert);
-         Vertice u;
-         while(!fila.isEmpty()){
-         u = fila.remove();
-         for (Vertice v : u.listaAdjacencia) {
-         if(v.estado == BRANCO){
-         v.setEstado(CINZA);
-         v.setDistancia(u.distancia + 1);
-         v.setPred(u);
-         fila.add(v);
-         }
-         }
-         u.setEstado(PRETO);
-         }
-         */
     }
 
     public static void menorCaminho(Grafo grafo, Vertice origem, Vertice destino) {
@@ -78,29 +58,29 @@ public class Algoritmos {
     }
 
     /* Algoritmo de busca em profundidade e algoritmo ordenação Topológica */
-    public static void inicializa_busca_profundidade(Grafo grafo) {
+    public static void buscaEmProfundidade(Grafo grafo) {
         ordemTopologica = new ArrayList<>();
         tempo = 0;
         for (Vertice vertice : grafo.listaVertice) {
-            if (vertice.estado == BRANCO) {
-                busca_profundidade(vertice);
+            if (vertice.cor == BRANCO) {
+                dfsVisit(vertice);
             }
         }
     }
 
-    public static void busca_profundidade(Vertice vertice) {
+    public static void dfsVisit(Vertice vertice) {
         tempo++;
-        vertice.estado = CINZA;
+        vertice.cor = CINZA;
         vertice.tempoDescoberto = tempo;
         int i;
         for (i = 0; i < vertice.listaAdjacencia.size(); i++) {
             Vertice vertAuxiliar = vertice.listaAdjacencia.get(i).destino;
-            if (vertAuxiliar.estado == BRANCO) {
+            if (vertAuxiliar.cor == BRANCO) {
                 vertAuxiliar.pred = vertice;
-                busca_profundidade(vertAuxiliar);
+                dfsVisit(vertAuxiliar);
             }
         }
-        vertice.estado = PRETO;
+        vertice.cor = PRETO;
         tempo++;
         vertice.tempoTermino = tempo;
         ordemTopologica.add(0, vertice);
@@ -111,24 +91,87 @@ public class Algoritmos {
         for (Vertice v : ordemTopologica) {
             System.out.print(v.nome + " ");
         }
+        System.out.println("\n");
     }
+    
+    public static void componentesConexos(Grafo grafo){
+        for (Vertice u : grafo.listaVertice) {
+            u.cor = BRANCO;
+            u.pred = null;
+        }
+        int cc = 0;
+        ordemTopologica = new ArrayList<>();
+        for (Vertice v : grafo.listaVertice) {
+            if (v.cor == BRANCO){
+                cc++;
+                dfsVisit(v);
+            }
+        }
+        
+        System.out.println("\nComponentes conexos: " + cc);
+    }
+    
+    public static void componenteFortementeConexo(Grafo grafo){
+        resetaVertices(grafo);
+        Grafo transposto;
+        
+        buscaEmProfundidade(grafo);
 
-    /* Algoritmo de Dijkstra */
+        transposto = grafo.transposto();
+        
+        int posicaoTopologica[] = new int[ordemTopologica.size()];
+        for (int i = 0; i < ordemTopologica.size(); i++) {
+            Vertice v = ordemTopologica.get(i);
+            posicaoTopologica[i] = v.numero;
+        }
+        
+        ordemTopologica = new ArrayList<>();
+        
+        tempo = 0;
+        for (int i = 0; i < posicaoTopologica.length; i++) {
+            Vertice v = transposto.getVertice(posicaoTopologica[i]);
+            if (v.cor == BRANCO) {
+                dfsVisit(v);
+            }
+        }
+    }
+    
+    public static void mostraSCC(){
+        int comp = 1;
+        for (int i = 0; i < ordemTopologica.size(); i++) {
+            Vertice v = ordemTopologica.get(i);
+            if (v.pred == null){
+                System.out.print("\n"); 
+                System.out.print("Componente " + (comp++) + ": ");
+            }
+            System.out.print(v.nome + " ");                       
+        }
+        System.out.println();
+    }
+        
+    /*
+    *   ALGORITMOS DE CAMINHOS MÍNIMOS
+    */
+        
     private static void inicializaVertices(Grafo grafo, Vertice s) {
         for (Vertice v : grafo.listaVertice) {
             v.distancia = INFINITO;
             v.pred = null;
+            v.visitado = false;
         }
         s.distancia = 0;
     }
 
-    private static void relaxa(Vertice u, Vertice v, int peso) {
-        if (v.distancia > u.distancia + peso) {
+    private static boolean relaxa(Vertice u, Vertice v, int peso) {
+        if (v.distancia > (double)u.distancia + peso) {
             v.distancia = u.distancia + peso;
             v.pred = u;
+            return true;
         }
+        return false;
     }
-
+    
+    /* Algoritmo de Dijkstra */
     public static void dijkstra(Grafo grafo, Vertice s) {
         inicializaVertices(grafo, s);
         PriorityQueue<Vertice> filaP = new PriorityQueue<>();
@@ -138,34 +181,27 @@ public class Algoritmos {
         //    filaP.add(v);
         while (!filaP.isEmpty()) {
             Vertice u = filaP.poll();
-            for (Aresta a : u.listaAdjacencia) {
-                Vertice v = a.destino;
-                if (v.distancia > u.distancia + a.peso) {
-                    filaP.remove(v);
-                    v.distancia = u.distancia + a.peso;
-                    v.pred = u;
-                    filaP.add(v);
+            if (!u.visitado){
+                u.visitado = true;
+                for (Aresta a : u.listaAdjacencia) {
+                    Vertice v = a.destino;
+                    if (relaxa(u, v, a.peso)) {
+                        filaP.add(v);
+                    }
                 }
             }
         }
     }
 
-
-
     public static boolean bellmanFord(Grafo grafo, Vertice s) {
         inicializaVertices(grafo, s);
-        int i;
-        for (i = 0; i < grafo.listaVertice.size() - 1; i++) {
+        for (int i = 0; i < grafo.listaVertice.size() - 1; i++) {
             for (Aresta a : grafo.listaAresta) {
                 Vertice u = a.origem;
                 Vertice v = a.destino;
                 int peso = a.peso;
 
-                //relaxa(u, v, peso);
-                if (v.distancia > (double) u.distancia + peso) {
-                    v.distancia = u.distancia + peso;
-                    v.pred = u;
-                }
+                relaxa(u, v, peso);
             }
         }
         for (Aresta a : grafo.listaAresta) {
@@ -175,5 +211,4 @@ public class Algoritmos {
         }
         return true;
     }
-    
 }
