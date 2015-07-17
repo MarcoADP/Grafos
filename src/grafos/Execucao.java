@@ -31,9 +31,18 @@ public class Execucao {
         Algoritmos.bellmanFord(grafo, grafo.listaVertice.get(0));
         grafo.mostraGrafo();*/
         
-        Algoritmos.componentesConexos(grafo);
-        Algoritmos.componenteFortementeConexo(grafo);
-        Algoritmos.mostraSCC();
+        //Algoritmos.componentesConexos(grafo);
+        //Algoritmos.componenteFortementeConexo(grafo);
+        //Algoritmos.mostraSCC();
+        
+        int mat[][] = Algoritmos.floydWarshall(grafo);
+        /*System.out.println("Matriz Dn: \n");
+        for(int i = 0; i < grafo.listaVertice.size(); i++){
+            System.out.println(" ");
+            for(int j = 0; j < grafo.listaVertice.size(); j++){
+                System.out.println(mat[i][j] + " ");
+            }
+        }*/
         
     }
 }

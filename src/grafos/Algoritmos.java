@@ -211,4 +211,32 @@ public class Algoritmos {
         }
         return true;
     }
+    
+    public static int minimo(int a, double b){
+        if(a < b){
+            return a;
+        }
+        return (int) b;
+    }
+    
+    public static int[][] floydWarshall(Grafo grafo){
+        //olhar em  http://algs4.cs.princeton.edu/44sp/FloydWarshall.java.html
+        int k, i, j;
+        int n = grafo.listaVertice.size();
+        int[][][] D = null;
+        /*for(i = 0; i < n; i++){
+            for(j = 0; j < n; j++){
+                D[0][i][j] = grafo.matrizAdjacencia[i][j];
+            }
+        }*/
+        D[0][0][0] = 2;
+        for(k = 1; k <= n; k++){
+            for(i = 1; i <= n; i++){
+                for(j = 1; j <= n; j++){
+                    D[k][i][j] = minimo(D[k-1][i][j],(double) D[k-1][i][k] + D[k-1][k][j]);
+                }
+            }
+        }
+        return D[n];
+    }
 }
