@@ -18,11 +18,11 @@ public class LeituraArquivo {
         
         String linha = br.readLine();
         while(linha != null && !linha.equals("#")) {
-           String strNumero = linha.substring(0, linha.indexOf(' '));
+           String strID = linha.substring(0, linha.indexOf(' '));
            String nome = linha.substring(linha.lastIndexOf(' ') + 1, linha.length());
-           int numero = Integer.parseInt(strNumero);
+           int id = Integer.parseInt(strID) - 1;
            
-           Vertice vert = new Vertice(numero, nome);
+           Vertice vert = new Vertice(id, nome);
            grafo.listaVertice.add(vert);
            linha = br.readLine();
         }
@@ -41,8 +41,8 @@ public class LeituraArquivo {
                 peso = 1;
             }
             
-            int origem = Integer.parseInt(strOrigem);
-            int destino = Integer.parseInt(strDestino);
+            int origem = Integer.parseInt(strOrigem) - 1;
+            int destino = Integer.parseInt(strDestino) - 1;
             Vertice vertOrigem = grafo.getVertice(origem);
             Vertice vertDestino = grafo.getVertice(destino);
             if(vertOrigem != null && vertDestino != null){
