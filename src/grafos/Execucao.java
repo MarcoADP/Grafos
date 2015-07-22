@@ -56,5 +56,8 @@ public class Execucao {
         BellmanFord bFord = new BellmanFord(grafo);
         bFord.bellmanFord(grafo.getVertice("s"));
         bFord.mostraInfo();
+        
+        Ir_Vir prob = new Ir_Vir();
+        prob.leitura();
     }
 }
