@@ -1,14 +1,14 @@
-
-package grafos;
+/*
+*   Problema 1128 (Come and Go - Ir e Vir) - link: https://www.urionlinejudge.com.br/judge/en/problems/view/1128
+*/
+package problemas;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-
-public class Main {
-    
+public class Main {    
     public static class ComponentesFortementeConexos {
         public ArrayList<ArrayList<Vertice>> componentes;
         public Grafo grafo;
@@ -35,12 +35,10 @@ public class Main {
                 }
                 componentes.get(comp).add(v);
             }
-        }
-    
-    
+        }    
     }
     
-    public static class BuscaEmProfundidade{
+    public static class BuscaEmProfundidade {
         public static final int BRANCO = 0;
         public static final int CINZA = 1;
         public static final int PRETO = -1;
@@ -104,10 +102,9 @@ public class Main {
         private void inicializaVertices(Grafo grafo) {
             for (Vertice v : grafo.listaVertice) {
                 pred[v.id] = null;
-                cor[v.id] = BRANCO;            
+                cor[v.id] = BRANCO;
             }
-        }
-    
+        }    
     }
     
     public static class Vertice{
@@ -198,12 +195,16 @@ public class Main {
                     grafo.addAresta(new Aresta(vertDestino, vertOrigem, 1));
             }
             
+            /*
+            *   RESOLUÇÃO DO PROBLEMA
+            */
             ComponentesFortementeConexos scc = new ComponentesFortementeConexos(grafo);
             scc.componenteFortementeConexo();
             if (scc.componentes.size() == 1)
                 System.out.println("1");
             else
                 System.out.println("0");
+            
             
             linha = buffer.readLine();
             nVert = Integer.parseInt(linha.substring(0, linha.indexOf(' ')));

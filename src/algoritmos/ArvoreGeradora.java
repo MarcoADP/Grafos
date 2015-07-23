@@ -10,6 +10,7 @@ public class ArvoreGeradora {
     public Grafo grafo;
     
     public void mostraInfo(){
+        System.out.println("\n\nEXECUÇÃO DO ALGORITMO:");
         for (Vertice v : this.grafo.listaVertice) {
             System.out.println("\nVertice: " + v.nome);
             if (pred[v.id] != null) {

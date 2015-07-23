@@ -74,6 +74,7 @@ public final class BuscaEmProfundidade extends ArvoreGeradora{
     
     @Override
     public void mostraInfo() {
+        System.out.println("\n\nEXECUÇÃO DO ALGORITMO:");
         for (Vertice v : grafo.listaVertice) {
             System.out.println("\nVertice: " + v.nome);
             System.out.println("Tempo de descoberta: " + tempoDescoberto[v.id]);

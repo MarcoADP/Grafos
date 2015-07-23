@@ -1,3 +1,10 @@
+/*
+*   ALUNOS:
+*   Matheus Alberto     RA: 85582
+*   João Otávio         RA: 81746
+*   Marco Aurélio       RA: 82473
+*/
+
 package grafos;
 
 import algoritmos.*;
@@ -7,7 +14,7 @@ public class Execucao {
     public static void main(String[] args) throws IOException {
         Grafo grafo;
         
-        System.out.println("\n\n\nBUSCA EM LARGURA: ");
+        System.out.println("\n\nBUSCA EM LARGURA: ");
         grafo = LeituraArquivo.lerArquivo("exemplo1.tgf"); //exemplo do slide 15 do PDF 2_aula3.pdf
         grafo.mostraListaAdjacencia();
         grafo.mostraMatrizAdjacencia();
@@ -18,7 +25,7 @@ public class Execucao {
         
         
         System.out.println("-----------------------------------------");
-        System.out.println("\n\n\nBUSCA EM PROFUNDIDADE: ");
+        System.out.println("\n\nBUSCA EM PROFUNDIDADE: ");
         grafo = LeituraArquivo.lerArquivo("exemplo2.tgf"); //exemplo do slide 28 do PDF 4_aula5.pdf
         grafo.mostraListaAdjacencia();
         grafo.mostraMatrizAdjacencia();
@@ -37,7 +44,7 @@ public class Execucao {
         
         
         System.out.println("-----------------------------------------");
-        System.out.println("\n\n\nDIJKSTRA: "); 
+        System.out.println("\n\nDIJKSTRA: "); 
         grafo = LeituraArquivo.lerArquivo("exemplo3.tgf"); //exemplo do slide 11 do PDF aula10.pdf
         grafo.mostraListaAdjacencia();
         grafo.mostraMatrizAdjacencia();
@@ -48,7 +55,7 @@ public class Execucao {
         
         
         System.out.println("-----------------------------------------");
-        System.out.println("\n\n\nBELLMAN-FORD: "); 
+        System.out.println("\n\nBELLMAN-FORD: "); 
         grafo = LeituraArquivo.lerArquivo("exemplo4.tgf"); //exemplo do slide 14 do PDF aula11.pdf
         grafo.mostraListaAdjacencia();
         grafo.mostraMatrizAdjacencia();
@@ -57,7 +64,14 @@ public class Execucao {
         bFord.bellmanFord(grafo.getVertice("s"));
         bFord.mostraInfo();
         
-        Ir_Vir prob = new Ir_Vir();
-        prob.leitura();
+        System.out.println("-----------------------------------------");
+        System.out.println("\n\nFLOYD-WARSHALL: "); 
+        grafo = LeituraArquivo.lerArquivo("exemplo5.tgf"); //exemplo do slide 14 do PDF aula12.pdf
+        grafo.mostraListaAdjacencia();
+        grafo.mostraMatrizAdjacencia();
+              
+        FloydWarshall floydW = new FloydWarshall(grafo);
+        floydW.floydWarshall();
+        floydW.mostrarMatrizDist();        
     }
 }

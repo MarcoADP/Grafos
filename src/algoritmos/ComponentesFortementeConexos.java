@@ -23,8 +23,9 @@ public class ComponentesFortementeConexos {
         BuscaEmProfundidade dfsTransposto = new BuscaEmProfundidade(transposto);
         dfsTransposto.buscaEmProfundidade(dfs.ordemTopologica);
         
+        //Criando uma lista de componentes
         int comp = -1;
-        for (Vertice v : dfs.ordemTopologica) {
+        for (Vertice v : dfsTransposto.ordemTopologica) {
             if (dfsTransposto.pred[v.id] == null){
                 comp++;
                 componentes.add(new ArrayList<>());
